@@ -7,6 +7,7 @@ import { ReactElement } from 'react';
 import * as E from 'fp-ts/Either';
 import { map } from 'fp-ts/lib/Array';
 import PageLayout from '@components/PageLayout';
+import InfoText from '@components/InfoText';
 
 interface PageProps {
   questionList: E.Either<ErrorMessage, QuestionDetail[]>;
@@ -20,7 +21,7 @@ export default function Home({ questionList }: PageProps): ReactElement {
           <a className="btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -48,31 +49,27 @@ export default function Home({ questionList }: PageProps): ReactElement {
                   return (
                     <div
                       key={question.url}
-                      className="bg-white shadow-md rounded-xl px-8 py-6"
+                      className="px-8 py-6 bg-white shadow-md rounded-xl"
                     >
-                      <h2 className="font-black text-2xl">
+                      <h2 className="text-2xl font-black">
                         {question.question}
                       </h2>
-                      <p className="text-sm text-gray-800 mt-6">
-                        <span className="font-medium">Published: </span>
-                        <span className="font-light">
-                          {question.published_at}
-                        </span>
-                      </p>
-                      <p className="text-sm text-gray-800 mt-1s">
-                        <span className="font-medium">Choices: </span>
-                        <span className="font-light">
-                          {question.choices.length}
-                        </span>
-                      </p>
-                      <div className="mt-6 flex-col flex gap-2">
+                      <InfoText
+                        label="Published"
+                        text={new Date(question.published_at).toDateString()}
+                      />
+                      <InfoText
+                        label="Choices"
+                        text={`${question.choices.length}`}
+                      />
+                      <div className="flex flex-col gap-2 mt-6">
                         {pipe(
                           question.choices,
                           map((choice) => {
                             return (
                               <div
                                 key={choice.url}
-                                className="flex items-center bg-gray-50 px-4 py-2 rounded-2xl justify-between"
+                                className="flex items-center justify-between px-4 py-2 bg-gray-50 rounded-2xl"
                               >
                                 <p className="font-light">{choice.choice}</p>
                                 <p className="text-xs font-black text-gray-700">

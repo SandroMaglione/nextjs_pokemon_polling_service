@@ -19,7 +19,7 @@ export const questionDetail = t.type({
 
 export const questionDetailList = t.array(questionDetail);
 
-const createQuestion = t.type({
+export const createQuestion = t.type({
   question: t.string,
-  choices: t.array(t.string),
+  choices: t.tuple([t.string, t.string, t.string, t.string]),
 });
